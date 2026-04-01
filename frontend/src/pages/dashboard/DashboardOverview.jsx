@@ -32,14 +32,14 @@ function CountdownTimer({ targetDate }) {
       {Object.entries(time).map(([unit, val]) => (
         <div key={unit} style={{ textAlign: 'center' }}>
           <div style={{
-            background: 'rgba(59,130,246,0.1)', border: '1px solid rgba(59,130,246,0.2)',
+            background: 'rgba(37,99,235,0.1)', border: '1px solid rgba(37,99,235,0.2)',
             borderRadius: 12, padding: '12px 16px',
-            fontFamily: "'Inter', sans-serif", fontSize: '1.5rem', fontWeight: 600,
+            fontFamily: "'Plus Jakarta Sans', sans-serif", fontSize: '1.5rem', fontWeight: 700,
             color: '#60a5fa', minWidth: 60, textAlign: 'center', boxShadow: '0 4px 12px rgba(0,0,0,0.2)'
           }}>
             {String(val).padStart(2, '0')}
           </div>
-          <div style={{ fontSize: '0.7rem', color: 'var(--text-muted)', marginTop: 8, textTransform: 'uppercase', letterSpacing: '0.1em', fontWeight: 600 }}>
+          <div style={{ fontSize: '0.7rem', color: 'var(--text-muted)', marginTop: 8, textTransform: 'uppercase', letterSpacing: '0.1em', fontWeight: 700 }}>
             {unit === 'd' ? 'Days' : unit === 'h' ? 'Hrs' : unit === 'm' ? 'Min' : 'Sec'}
           </div>
         </div>
@@ -75,25 +75,25 @@ export default function DashboardOverview() {
 
   const stats = [
     {
-      icon: CreditCard, label: 'Subscription', color: '#3b82f6', glow: 'rgba(59,130,246,0.15)',
+      icon: CreditCard, label: 'Network Access', color: '#2563eb', glow: 'rgba(37,99,235,0.15)',
       value: isActive ? 'Active' : 'Inactive',
-      sub: subscription?.plan ? `${subscription.plan} plan` : 'No active plan',
-      badgeColor: isActive ? '#10b981' : '#f43f5e',
+      sub: subscription?.plan ? `${subscription.plan} node` : 'No active integration',
+      badgeColor: isActive ? '#059669' : '#f43f5e',
     },
     {
-      icon: Target, label: 'Scores Entered', color: '#8b5cf6', glow: 'rgba(139,92,246,0.15)',
+      icon: Target, label: 'Metrics Logged', color: '#8b5cf6', glow: 'rgba(139,92,246,0.15)',
       value: scores.length,
-      sub: `${Math.max(0, 5 - scores.length)} more needed for draw`,
+      sub: `${Math.max(0, 5 - scores.length)} metrics required for execution`,
     },
     {
-      icon: Trophy, label: 'Total Winnings', color: '#f59e0b', glow: 'rgba(245,158,11,0.15)',
+      icon: Trophy, label: 'Capital Yield', color: '#f59e0b', glow: 'rgba(245,158,11,0.15)',
       value: `£${totalWon.toFixed(2)}`,
-      sub: `${myWinnings.length} prize(s) won`,
+      sub: `${myWinnings.length} distribution(s) claimed`,
     },
     {
-      icon: Heart, label: 'Charity Impact', color: '#10b981', glow: 'rgba(16,185,129,0.15)',
+      icon: Heart, label: 'Impact Allocation', color: '#059669', glow: 'rgba(5,150,105,0.15)',
       value: `${user?.charityPercentage || 10}%`,
-      sub: 'of subscription donated',
+      sub: 'of deployed capital dedicated',
     },
   ];
 
@@ -101,10 +101,10 @@ export default function DashboardOverview() {
     <div style={{ paddingBottom: 60 }}>
       {/* Header */}
       <motion.div initial={{ opacity: 0, y: -10 }} animate={{ opacity: 1, y: 0 }} style={{ marginBottom: 32 }}>
-        <h1 style={{ fontFamily: "'Inter', sans-serif", fontSize: '2rem', fontWeight: 500, marginBottom: 8, color: 'white' }}>
-          Good to see you, {user?.name?.split(' ')[0]} 👋
+        <h1 style={{ fontFamily: "'Plus Jakarta Sans', sans-serif", fontSize: '2rem', fontWeight: 700, marginBottom: 8, color: 'white', letterSpacing: '-0.02em' }}>
+          Network Command Center
         </h1>
-        <p style={{ color: 'var(--text-secondary)' }}>Welcome back to your personalized command center.</p>
+        <p style={{ color: 'var(--text-secondary)' }}>Welcome to your secure ImpactDrive operational node.</p>
       </motion.div>
 
       {/* Subscribe CTA if not subscribed */}
@@ -115,20 +115,20 @@ export default function DashboardOverview() {
            className="bento-card"
            style={{
              padding: '28px 32px', marginBottom: 24,
-             background: 'linear-gradient(135deg, rgba(59,130,246,0.1), rgba(139,92,246,0.05))',
-             borderColor: 'rgba(59,130,246,0.3)',
+             background: 'linear-gradient(135deg, rgba(37,99,235,0.1), rgba(10,15,28,0.8))',
+             borderColor: 'rgba(37,99,235,0.3)',
              display: 'flex', alignItems: 'center', justifyContent: 'space-between', flexWrap: 'wrap', gap: 16,
            }}
         >
           <div>
-             <h3 style={{ fontFamily: "'Inter', sans-serif", fontWeight: 600, marginBottom: 6, fontSize: '1.1rem', color: 'white' }}>
-               🚀 Activate Your Subscription
+             <h3 style={{ fontFamily: "'Plus Jakarta Sans', sans-serif", fontWeight: 700, marginBottom: 6, fontSize: '1.1rem', color: 'white' }}>
+               System Access Required
              </h3>
              <p style={{ color: 'var(--text-secondary)', fontSize: '0.9rem' }}>
-               You are missing out on the monthly draws. Subscribe to enter your scores and support your charity.
+               Your node is currently dormant. Establish a connection to initiate data deployment and yield generation.
              </p>
           </div>
-          <GlowButton onClick={() => navigate('/dashboard/scores')}>Subscribe Now</GlowButton>
+          <GlowButton onClick={() => navigate('/dashboard/scores')}>Initialize Connection</GlowButton>
         </motion.div>
       )}
 
@@ -152,13 +152,13 @@ export default function DashboardOverview() {
                 {badgeColor && (
                   <div style={{ display: 'flex', alignItems: 'center', gap: 6, background: 'rgba(0,0,0,0.3)', padding: '4px 10px', borderRadius: 99, border: '1px solid rgba(255,255,255,0.05)' }}>
                      <div style={{ width: 6, height: 6, borderRadius: '50%', background: badgeColor, boxShadow: `0 0 8px ${badgeColor}` }} />
-                     <span style={{ fontSize: '0.7rem', fontWeight: 600, color: 'white', textTransform: 'uppercase' }}>{value}</span>
+                     <span style={{ fontSize: '0.7rem', fontWeight: 700, color: 'white', textTransform: 'uppercase' }}>{value}</span>
                   </div>
                 )}
               </div>
               <div style={{ position: 'relative', zIndex: 10 }}>
-                 {!badgeColor && <div style={{ fontSize: '1.75rem', fontWeight: 600, fontFamily: "'Inter', sans-serif", color: 'white', lineHeight: 1.2, marginBottom: 4 }}>{value}</div>}
-                 <div style={{ color: 'var(--text-secondary)', fontSize: '0.85rem', fontWeight: 500 }}>{label}</div>
+                 {!badgeColor && <div style={{ fontSize: '1.75rem', fontWeight: 700, fontFamily: "'Plus Jakarta Sans', sans-serif", color: 'white', lineHeight: 1.2, marginBottom: 4 }}>{value}</div>}
+                 <div style={{ color: 'var(--text-secondary)', fontSize: '0.85rem', fontWeight: 600 }}>{label}</div>
                  <div style={{ color: 'var(--text-muted)', fontSize: '0.75rem', marginTop: 8 }}>{sub}</div>
               </div>
             </motion.div>
@@ -172,23 +172,23 @@ export default function DashboardOverview() {
          <motion.div variants={fadeUp} initial="initial" animate="animate" className="bento-card bento-col-7" style={{ padding: 32, display: 'flex', flexDirection: 'column' }}>
             <div style={{ display: 'flex', alignItems: 'center', justifyContent: 'space-between', marginBottom: 24 }}>
                <div style={{ display: 'flex', alignItems: 'center', gap: 12 }}>
-                  <div style={{ width: 36, height: 36, background: 'rgba(59,130,246,0.1)', color: '#60a5fa', borderRadius: 10, display: 'flex', alignItems: 'center', justifyContent: 'center' }}><Clock size={16} /></div>
-                  <h3 style={{ fontFamily: "'Inter', sans-serif", fontWeight: 500, fontSize: '1.2rem', color: 'white' }}>Next Monthly Draw</h3>
+                  <div style={{ width: 36, height: 36, background: 'rgba(37,99,235,0.1)', color: '#60a5fa', borderRadius: 10, display: 'flex', alignItems: 'center', justifyContent: 'center' }}><Clock size={16} /></div>
+                  <h3 style={{ fontFamily: "'Plus Jakarta Sans', sans-serif", fontWeight: 600, fontSize: '1.2rem', color: 'white' }}>Global Sequence Execution</h3>
                </div>
                
                {isActive ? (
                  scores.length >= 5 ? (
-                   <div style={{ display: 'flex', alignItems: 'center', gap: 6, color: '#10b981', background: 'rgba(16,185,129,0.1)', padding: '4px 12px', borderRadius: 99, border: '1px solid rgba(16,185,129,0.2)', fontSize: '0.75rem', fontWeight: 600 }}>✓ Eligible</div>
+                   <div style={{ display: 'flex', alignItems: 'center', gap: 6, color: '#10b981', background: 'rgba(5,150,105,0.1)', padding: '4px 12px', borderRadius: 99, border: '1px solid rgba(5,150,105,0.2)', fontSize: '0.75rem', fontWeight: 700 }}>✓ Metrics Ready</div>
                  ) : (
-                   <div style={{ display: 'flex', alignItems: 'center', gap: 6, color: '#f59e0b', background: 'rgba(245,158,11,0.1)', padding: '4px 12px', borderRadius: 99, border: '1px solid rgba(245,158,11,0.2)', fontSize: '0.75rem', fontWeight: 600 }}>⚠ Requires {5 - scores.length} more scores</div>
+                   <div style={{ display: 'flex', alignItems: 'center', gap: 6, color: '#f59e0b', background: 'rgba(245,158,11,0.1)', padding: '4px 12px', borderRadius: 99, border: '1px solid rgba(245,158,11,0.2)', fontSize: '0.75rem', fontWeight: 700 }}>⚠ {5 - scores.length} Data Points Required</div>
                  )
                ) : null}
             </div>
 
             <p style={{ color: 'var(--text-secondary)', fontSize: '0.9rem', marginBottom: 16 }}>
                {draw?.status === 'published'
-                 ? `The previous draw (${draw.month}) concluded securely. Preparing countdown for the next event.`
-                 : 'Gathering scores. The provably fair engine will execute the jackpot sequence when the countdown ends.'}
+                 ? `The previous execution cycle (${draw.month}) concluded securely. Initializing chronometer for the next network event.`
+                 : 'Compiling global metrics. The algorithmic engine will initiate the next distribution sequence when the chronometer reaches zero.'}
             </p>
 
             <div style={{ marginTop: 'auto', background: 'rgba(0,0,0,0.2)', borderRadius: 16, padding: 24, border: '1px solid rgba(255,255,255,0.03)' }}>
@@ -201,10 +201,10 @@ export default function DashboardOverview() {
             <div style={{ display: 'flex', alignItems: 'center', justifyContent: 'space-between', marginBottom: 24 }}>
                <div style={{ display: 'flex', alignItems: 'center', gap: 12 }}>
                   <div style={{ width: 36, height: 36, background: 'rgba(139,92,246,0.1)', color: '#a78bfa', borderRadius: 10, display: 'flex', alignItems: 'center', justifyContent: 'center' }}><Target size={16} /></div>
-                  <h3 style={{ fontFamily: "'Inter', sans-serif", fontWeight: 500, fontSize: '1.2rem', color: 'white' }}>Recent Scores</h3>
+                  <h3 style={{ fontFamily: "'Plus Jakarta Sans', sans-serif", fontWeight: 600, fontSize: '1.2rem', color: 'white' }}>Recent Telemetry</h3>
                </div>
-               <button onClick={() => navigate('/dashboard/scores')} style={{ background: 'none', border: 'none', color: '#a78bfa', fontSize: '0.8rem', cursor: 'pointer', display: 'flex', alignItems: 'center', gap: 4, fontWeight: 500 }}>
-                 View all <ChevronRight size={14} />
+               <button onClick={() => navigate('/dashboard/scores')} style={{ background: 'none', border: 'none', color: '#a78bfa', fontSize: '0.8rem', cursor: 'pointer', display: 'flex', alignItems: 'center', gap: 4, fontWeight: 600 }}>
+                 Access Ledger <ChevronRight size={14} />
                </button>
             </div>
 
@@ -212,15 +212,15 @@ export default function DashboardOverview() {
               Array.from({ length: 4 }).map((_, i) => <div key={i} style={{ height: 48, background: 'rgba(255,255,255,0.02)', marginBottom: 8, borderRadius: 8, animation: 'pulse 2s infinite' }} />)
             ) : scores.length === 0 ? (
               <div style={{ flex: 1, display: 'flex', flexDirection: 'column', alignItems: 'center', justifyContent: 'center', textAlign: 'center', background: 'rgba(0,0,0,0.2)', borderRadius: 16, border: '1px dashed rgba(255,255,255,0.1)' }}>
-                 <p style={{ color: 'var(--text-muted)', fontSize: '0.9rem', marginBottom: 16 }}>You haven't logged any scores yet.</p>
-                 <GlowButton size="sm" variant="ghost" onClick={() => navigate('/dashboard/scores')}>Add First Score</GlowButton>
+                 <p style={{ color: 'var(--text-muted)', fontSize: '0.9rem', marginBottom: 16 }}>No telemetry data located in the active ledger.</p>
+                 <GlowButton size="sm" variant="ghost" onClick={() => navigate('/dashboard/scores')}>Deploy Initial Data</GlowButton>
               </div>
             ) : (
               <div style={{ display: 'flex', flexDirection: 'column', gap: 12 }}>
                  {scores.slice(0, 5).map((s, i) => (
                     <div key={s._id} style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', background: 'rgba(0,0,0,0.2)', padding: '12px 16px', borderRadius: 12, border: '1px solid rgba(255,255,255,0.03)' }}>
                        <div>
-                          <div style={{ color: 'white', fontWeight: 600, fontSize: '0.95rem' }}>{s.score} <span style={{ fontSize: '0.75rem', color: 'var(--text-muted)', fontWeight: 400 }}>pts</span></div>
+                          <div style={{ color: 'white', fontWeight: 700, fontSize: '0.95rem', fontFamily: "'Plus Jakarta Sans', sans-serif" }}>{s.score} <span style={{ fontSize: '0.75rem', color: 'var(--text-muted)', fontWeight: 500 }}>units</span></div>
                           <div style={{ color: 'var(--text-muted)', fontSize: '0.75rem', marginTop: 2 }}>{new Date(s.date).toLocaleDateString()}</div>
                        </div>
                        <div style={{ height: 6, width: 100, background: 'rgba(255,255,255,0.06)', borderRadius: 3, overflow: 'hidden' }}>
@@ -237,7 +237,6 @@ export default function DashboardOverview() {
             )}
          </motion.div>
       </div>
-
     </div>
   );
 }

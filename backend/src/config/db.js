@@ -1,38 +1,18 @@
-// const mongoose = require("mongoose");
-// const env = require("./env");
-
-// async function connectDB() {
-//   if (!env.mongoUri) {
-//     throw new Error("MONGO_URI is required");
-//   }
-
-//   try {
-//     await mongoose.connect(env.mongoUri);
-//     console.log("✅ MongoDB connected");
-//   } catch (err) {
-//     console.error("❌ MongoDB connection error:", err);
-//     throw err; // VERY IMPORTANT
-//   }
-// }
-
-// module.exports = connectDB;
-
-
 const mongoose = require("mongoose");
 
-let isConnected = false;
+const connectDB = async () => {
+  try {
+    // Ab yeh .env file ya Vercel se tumhara Atlas link uthayega
+    const uri = process.env.MONGO_URI; 
+    
+    if (mongoose.connection.readyState >= 1) return;
 
-async function connectDB(uri) {
-  if (isConnected) return;
-
-  if (!uri) {
-    throw new Error("MONGO_URI is required");
+    await mongoose.connect(uri);
+    console.log("MongoDB Cloud (Atlas) connected successfully!");
+  } catch (err) {
+    console.error("DB connection failed:", err.message);
+    process.exit(1);
   }
-
-  const db = await mongoose.connect(uri);
-
-  isConnected = db.connections[0].readyState;
-  console.log("✅ MongoDB connected");
-}
+};
 
 module.exports = connectDB;

@@ -11,7 +11,7 @@ export default defineConfig({
     port: 5173,
     proxy: {
       '/api': {
-        target: 'https://golf-charity-backend-three.vercel.app',
+        target: 'http://localhost:5000',
         changeOrigin: true,
       },
     },

@@ -23,17 +23,17 @@ export default function AdminOverview() {
   }, []);
 
   const stats = analytics ? [
-    { icon: Users, label: 'Total Users', value: analytics.totalUsers || 0, color: '#3b82f6', glow: 'rgba(59,130,246,0.15)', sub: `Platform accounts` },
+    { icon: Users, label: 'Total Accounts', value: Math.max(0, (analytics.totalUsers || 0)), color: '#2563eb', glow: 'rgba(37,99,235,0.15)', sub: `Platform accounts` },
     { icon: TrendingUp, label: 'Current Prize Pool', value: `£${(analytics.totalPrizePool || 0).toFixed(2)}`, color: '#f59e0b', glow: 'rgba(245,158,11,0.15)', sub: 'Accumulated pot' },
-    { icon: Heart, label: 'Charity Raised', value: `£${(analytics.totalCharityFunds || 0).toFixed(2)}`, color: '#10b981', glow: 'rgba(16,185,129,0.15)', sub: 'Total worldwide impact' },
-    { icon: Trophy, label: 'Pending Winners', value: analytics.pendingWinners || 0, color: '#8b5cf6', glow: 'rgba(139,92,246,0.15)', sub: 'Awaiting your verification', badgeColor: (analytics.pendingWinners > 0) ? '#f43f5e' : null },
+    { icon: Heart, label: 'Charity Deployed', value: `£${(analytics.totalCharityFunds || 0).toFixed(2)}`, color: '#059669', glow: 'rgba(5,150,105,0.15)', sub: 'Total worldwide impact' },
+    { icon: Trophy, label: 'Pending Payouts', value: analytics.pendingWinners || 0, color: '#8b5cf6', glow: 'rgba(139,92,246,0.15)', sub: 'Awaiting your verification', badgeColor: (analytics.pendingWinners > 0) ? '#f43f5e' : null },
   ] : [];
 
   return (
     <div style={{ paddingBottom: 60 }}>
       <motion.div initial={{ opacity: 0, y: -10 }} animate={{ opacity: 1, y: 0 }} className="admin-page-header" style={{ marginBottom: 32, display: 'flex', justifyContent: 'space-between', alignItems: 'flex-end', flexWrap: 'wrap', gap: 16 }}>
         <div>
-          <h1 style={{ fontFamily: "'Inter', sans-serif", fontSize: '2rem', fontWeight: 600, marginBottom: 8, color: 'white' }}>
+          <h1 style={{ fontFamily: "'Plus Jakarta Sans', sans-serif", fontSize: '2rem', fontWeight: 700, marginBottom: 8, color: 'white', letterSpacing: '-0.02em' }}>
             System Analytics
           </h1>
           <p style={{ color: 'var(--text-secondary)' }}>Live platform metrics and global control protocols.</p>
@@ -60,8 +60,8 @@ export default function AdminOverview() {
                 )}
               </div>
               <div style={{ position: 'relative', zIndex: 10 }}>
-                 <div style={{ fontFamily: "'Inter', sans-serif", fontSize: '1.8rem', fontWeight: 600, color: 'white', lineHeight: 1.1, marginBottom: 6 }}>{value}</div>
-                 <div style={{ color: 'var(--text-secondary)', fontSize: '0.85rem', fontWeight: 500 }}>{label}</div>
+                 <div style={{ fontFamily: "'Plus Jakarta Sans', sans-serif", fontSize: '1.8rem', fontWeight: 700, color: 'white', lineHeight: 1.1, marginBottom: 6 }}>{value}</div>
+                 <div style={{ color: 'var(--text-secondary)', fontSize: '0.85rem', fontWeight: 600 }}>{label}</div>
                  <div style={{ color: 'var(--text-muted)', fontSize: '0.75rem', marginTop: 8 }}>{sub}</div>
               </div>
             </motion.div>
@@ -73,23 +73,23 @@ export default function AdminOverview() {
       <div className="bento-grid">
          {/* Live Engine Status */}
          <motion.div variants={fadeUp} initial="initial" animate="animate" className="bento-card bento-col-8" style={{ padding: 32, display: 'flex', flexDirection: 'column', position: 'relative', overflow: 'hidden' }}>
-            <div style={{ position: 'absolute', left: -50, bottom: -100, width: 300, height: 300, background: 'radial-gradient(circle, rgba(59,130,246,0.1) 0%, transparent 60%)', border: '1px solid rgba(59,130,246,0.1)', borderRadius: '50%' }} />
+            <div style={{ position: 'absolute', left: -50, bottom: -100, width: 300, height: 300, background: 'radial-gradient(circle, rgba(37,99,235,0.1) 0%, transparent 60%)', border: '1px solid rgba(37,99,235,0.1)', borderRadius: '50%' }} />
             
             <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', marginBottom: 32, position: 'relative', zIndex: 10 }}>
                <div>
-                 <h3 style={{ fontFamily: "'Inter', sans-serif", fontWeight: 600, fontSize: '1.25rem', color: 'white', marginBottom: 4 }}>Live Engine Interface</h3>
+                 <h3 style={{ fontFamily: "'Plus Jakarta Sans', sans-serif", fontWeight: 700, fontSize: '1.25rem', color: 'white', marginBottom: 4 }}>Live Engine Interface</h3>
                  <p style={{ color: 'var(--text-secondary)', fontSize: '0.9rem' }}>Tracking the current globally broadcasted draw sequence.</p>
                </div>
                {draw?.status === 'published' ? (
-                  <div style={{ display: 'inline-flex', alignItems: 'center', gap: 8, padding: '4px 12px', background: 'rgba(16,185,129,0.1)', border: '1px solid rgba(16,185,129,0.2)', borderRadius: 99, color: '#10b981', fontSize: '0.75rem', fontWeight: 600, textTransform: 'uppercase' }}>
-                    <span style={{ width: 6, height: 6, borderRadius: '50%', background: '#10b981', boxShadow: '0 0 8px #10b981' }} />
-                    Published
-                  </div>
+                 <div style={{ display: 'inline-flex', alignItems: 'center', gap: 8, padding: '4px 12px', background: 'rgba(5,150,105,0.1)', border: '1px solid rgba(5,150,105,0.2)', borderRadius: 99, color: '#10b981', fontSize: '0.75rem', fontWeight: 600, textTransform: 'uppercase' }}>
+                   <span style={{ width: 6, height: 6, borderRadius: '50%', background: '#10b981', boxShadow: '0 0 8px #10b981' }} />
+                   Published
+                 </div>
                ) : (
-                  <div style={{ display: 'inline-flex', alignItems: 'center', gap: 8, padding: '4px 12px', background: 'rgba(245,158,11,0.1)', border: '1px solid rgba(245,158,11,0.2)', borderRadius: 99, color: '#f59e0b', fontSize: '0.75rem', fontWeight: 600, textTransform: 'uppercase' }}>
-                    <span style={{ width: 6, height: 6, borderRadius: '50%', background: '#f59e0b', boxShadow: '0 0 8px #f59e0b', animation: 'pulse 2s infinite' }} />
-                    Pending Action
-                  </div>
+                 <div style={{ display: 'inline-flex', alignItems: 'center', gap: 8, padding: '4px 12px', background: 'rgba(245,158,11,0.1)', border: '1px solid rgba(245,158,11,0.2)', borderRadius: 99, color: '#f59e0b', fontSize: '0.75rem', fontWeight: 600, textTransform: 'uppercase' }}>
+                   <span style={{ width: 6, height: 6, borderRadius: '50%', background: '#f59e0b', boxShadow: '0 0 8px #f59e0b', animation: 'pulse 2s infinite' }} />
+                   Pending Action
+                 </div>
                )}
             </div>
 
@@ -103,11 +103,11 @@ export default function AdminOverview() {
                     {(draw.numbers || []).map((n, i) => (
                       <div key={i} style={{
                         width: 50, height: 50, borderRadius: 12,
-                        background: 'linear-gradient(135deg, rgba(59,130,246,0.1), transparent)',
-                        border: '1px solid rgba(59,130,246,0.3)',
+                        background: 'linear-gradient(135deg, rgba(37,99,235,0.1), transparent)',
+                        border: '1px solid rgba(37,99,235,0.3)',
                         display: 'flex', alignItems: 'center', justifyContent: 'center',
-                        fontFamily: "'Inter', sans-serif", fontWeight: 700, color: 'white', fontSize: '1.2rem',
-                        boxShadow: 'inset 0 0 20px rgba(59,130,246,0.1), 0 4px 12px rgba(0,0,0,0.4)',
+                        fontFamily: "'Plus Jakarta Sans', sans-serif", fontWeight: 700, color: 'white', fontSize: '1.2rem',
+                        boxShadow: 'inset 0 0 20px rgba(37,99,235,0.1), 0 4px 12px rgba(0,0,0,0.4)',
                         backdropFilter: 'blur(10px)'
                       }}>
                         {n}
@@ -120,7 +120,7 @@ export default function AdminOverview() {
 
                 <div>
                   <div style={{ fontSize: '0.75rem', color: 'var(--text-muted)', textTransform: 'uppercase', letterSpacing: '0.08em', marginBottom: 8, fontWeight: 600 }}>Processed Pool</div>
-                  <div style={{ fontFamily: "'Inter', sans-serif", fontSize: '2rem', fontWeight: 600, color: '#60a5fa' }}>
+                  <div style={{ fontFamily: "'Plus Jakarta Sans', sans-serif", fontSize: '2rem', fontWeight: 700, color: '#60a5fa' }}>
                     £{(draw.totalPool || 0).toFixed(2)}
                   </div>
                 </div>
@@ -134,12 +134,12 @@ export default function AdminOverview() {
 
          {/* Admin Action Menu */}
          <motion.div variants={fadeUp} initial="initial" animate="animate" className="bento-card bento-col-4" style={{ padding: 32, display: 'flex', flexDirection: 'column' }}>
-            <h3 style={{ fontFamily: "'Inter', sans-serif", fontWeight: 600, fontSize: '1.25rem', color: 'white', marginBottom: 24 }}>Control Protocols</h3>
+            <h3 style={{ fontFamily: "'Plus Jakarta Sans', sans-serif", fontWeight: 700, fontSize: '1.25rem', color: 'white', marginBottom: 24 }}>Control Protocols</h3>
             
             <div style={{ display: 'flex', flexDirection: 'column', gap: 12 }}>
                {[
-                 { label: 'Manage Accounts', path: '/admin/users', icon: Users, color: '#3b82f6', bg: 'rgba(59,130,246,0.1)' },
-                 { label: 'Verify Charities', path: '/admin/charities', icon: Heart, color: '#10b981', bg: 'rgba(16,185,129,0.1)' },
+                 { label: 'Manage Accounts', path: '/admin/users', icon: Users, color: '#2563eb', bg: 'rgba(37,99,235,0.1)' },
+                 { label: 'Verify Charities', path: '/admin/charities', icon: Heart, color: '#059669', bg: 'rgba(5,150,105,0.1)' },
                  { label: 'Process Payouts', path: '/admin/winners', icon: Trophy, color: '#f59e0b', bg: 'rgba(245,158,11,0.1)' },
                  { label: 'System Logs', path: '/admin/analytics', icon: BarChart2, color: '#8b5cf6', bg: 'rgba(139,92,246,0.1)' },
                ].map((item) => (
@@ -153,14 +153,14 @@ export default function AdminOverview() {
                      padding: '16px 20px', background: 'rgba(255,255,255,0.02)',
                      border: '1px solid rgba(255,255,255,0.05)', borderRadius: 12,
                      color: 'white', cursor: 'pointer', textAlign: 'left',
-                     transition: 'all 0.2s ease', fontFamily: "'Inter', sans-serif"
+                     transition: 'all 0.2s ease', fontFamily: "'Plus Jakarta Sans', sans-serif"
                    }}
                  >
                    <div style={{ display: 'flex', alignItems: 'center', gap: 14 }}>
                       <div style={{ width: 36, height: 36, borderRadius: 8, background: item.bg, color: item.color, display: 'flex', alignItems: 'center', justifyContent: 'center' }}>
                          <item.icon size={16} />
                       </div>
-                      <span style={{ fontWeight: 500, fontSize: '0.95rem' }}>{item.label}</span>
+                      <span style={{ fontWeight: 600, fontSize: '0.95rem' }}>{item.label}</span>
                    </div>
                    <ChevronRight size={16} style={{ color: 'var(--text-muted)' }} />
                  </motion.button>

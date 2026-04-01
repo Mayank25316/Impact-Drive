@@ -2,7 +2,7 @@ import { NavLink, useNavigate, useLocation } from 'react-router-dom';
 import { motion, AnimatePresence } from 'framer-motion';
 import {
   LayoutDashboard, Target, Heart, Trophy, Users,
-  Dice5, BarChart2, LogOut, X, Menu,
+  Dice5, BarChart2, LogOut, X, Menu, Globe
 } from 'lucide-react';
 import { useAuth } from '../context/AuthContext';
 import { useState, useEffect } from 'react';
@@ -30,13 +30,11 @@ export default function Sidebar() {
   const [drawerOpen, setDrawerOpen] = useState(false);
   const links = user?.role === 'admin' ? adminLinks : userLinks;
 
-  // Lock body scroll when drawer is open on mobile
   useEffect(() => {
     document.body.style.overflow = drawerOpen ? 'hidden' : '';
     return () => { document.body.style.overflow = ''; };
   }, [drawerOpen]);
 
-  // Close drawer on route change
   useEffect(() => { setDrawerOpen(false); }, [location.pathname]);
 
   const handleLogout = () => {
@@ -46,21 +44,23 @@ export default function Sidebar() {
 
   const SidebarContent = ({ inDrawer = false }) => (
     <div style={{ display: 'flex', flexDirection: 'column', height: '100%' }}>
-      {/* Logo */}
+      {/* Premium Logo Section */}
       <div style={{ padding: inDrawer ? '24px 20px 16px' : '28px 24px 20px', borderBottom: '1px solid var(--glass-border)', display: 'flex', alignItems: 'center', justifyContent: 'space-between' }}>
         <div style={{ display: 'flex', alignItems: 'center', gap: 10 }}>
           <div style={{
             width: 38, height: 38, borderRadius: 10,
-            background: 'linear-gradient(135deg, #3b82f6, #8b5cf6)',
+            background: 'linear-gradient(135deg, #2563eb, #f59e0b)',
             display: 'flex', alignItems: 'center', justifyContent: 'center',
-            fontSize: '1.2rem', boxShadow: '0 0 20px rgba(59,130,246,0.4)',
-          }}>⛳</div>
+            boxShadow: '0 0 20px rgba(37, 99, 235, 0.4)',
+          }}>
+            <Globe size={22} color="white" />
+          </div>
           <div>
-            <div style={{ fontFamily: "'Space Grotesk', sans-serif", fontWeight: 700, color: 'white', fontSize: '1rem' }}>
-              Golf<span className="gradient-text">Win</span>
+            <div style={{ fontFamily: "'Plus Jakarta Sans', sans-serif", fontWeight: 700, color: 'white', fontSize: '1.05rem', letterSpacing: '-0.02em' }}>
+              Impact<span style={{ color: '#f59e0b' }}>Drive</span>
             </div>
             <div style={{ fontSize: '0.7rem', color: 'var(--text-muted)', textTransform: 'uppercase', letterSpacing: '0.08em' }}>
-              {user?.role === 'admin' ? 'Admin Panel' : 'Dashboard'}
+              {user?.role === 'admin' ? 'Admin Portal' : 'Member Hub'}
             </div>
           </div>
         </div>
@@ -71,17 +71,17 @@ export default function Sidebar() {
         )}
       </div>
 
-      {/* User info */}
+      {/* User Info */}
       <div style={{ padding: '16px 20px', borderBottom: '1px solid var(--glass-border)' }}>
-        <div style={{ background: 'rgba(255,255,255,0.05)', borderRadius: 12, padding: '12px 14px', display: 'flex', alignItems: 'center', gap: 12 }}>
-          <div style={{ width: 36, height: 36, borderRadius: '50%', background: 'linear-gradient(135deg, #3b82f6, #8b5cf6)', display: 'flex', alignItems: 'center', justifyContent: 'center', fontWeight: 700, fontSize: '0.85rem', color: 'white', flexShrink: 0 }}>
+        <div style={{ background: 'rgba(255,255,255,0.03)', borderRadius: 12, padding: '12px 14px', display: 'flex', alignItems: 'center', gap: 12, border: '1px solid rgba(255,255,255,0.05)' }}>
+          <div style={{ width: 36, height: 36, borderRadius: '50%', background: 'linear-gradient(135deg, #2563eb, #059669)', display: 'flex', alignItems: 'center', justifyContent: 'center', fontWeight: 700, fontSize: '0.85rem', color: 'white', flexShrink: 0 }}>
             {user?.name?.[0]?.toUpperCase() || 'U'}
           </div>
           <div style={{ overflow: 'hidden' }}>
             <div style={{ fontSize: '0.85rem', fontWeight: 600, color: 'white', whiteSpace: 'nowrap', overflow: 'hidden', textOverflow: 'ellipsis' }}>
               {user?.name || 'User'}
             </div>
-            <div style={{ fontSize: '0.72rem', color: 'var(--text-muted)' }}>
+            <div style={{ fontSize: '0.72rem', color: 'var(--text-muted)', marginTop: 2 }}>
               {user?.subscriptionStatus === 'active'
                 ? <span className="badge badge-active" style={{ fontSize: '0.65rem', padding: '2px 8px' }}>● Active</span>
                 : <span className="badge badge-inactive" style={{ fontSize: '0.65rem', padding: '2px 8px' }}>● Inactive</span>}
@@ -116,7 +116,7 @@ export default function Sidebar() {
           style={{ width: '100%', background: 'none', border: 'none', color: '#f87171' }}
         >
           <LogOut size={18} />
-          <span>Logout</span>
+          <span>Secure Logout</span>
         </button>
       </div>
     </div>
@@ -124,59 +124,39 @@ export default function Sidebar() {
 
   return (
     <>
-      {/* ── DESKTOP SIDEBAR (hidden on mobile via CSS) ── */}
       <div className="sidebar desktop-sidebar">
         <SidebarContent />
       </div>
 
-      {/* ── MOBILE TOP HEADER BAR ── */}
+      {/* Mobile Topbar */}
       <div className="mobile-topbar">
-        <button
-          className="mobile-topbar-btn"
-          onClick={() => setDrawerOpen(true)}
-          aria-label="Open menu"
-        >
+        <button className="mobile-topbar-btn" onClick={() => setDrawerOpen(true)}>
           <Menu size={22} />
         </button>
-
         <div style={{ display: 'flex', alignItems: 'center', gap: 8 }}>
-          <div style={{ width: 30, height: 30, borderRadius: 8, background: 'linear-gradient(135deg, #3b82f6, #8b5cf6)', display: 'flex', alignItems: 'center', justifyContent: 'center', fontSize: '1rem' }}>⛳</div>
-          <span style={{ fontFamily: "'Space Grotesk',sans-serif", fontWeight: 700, fontSize: '1rem', color: 'white' }}>
-            Golf<span className="gradient-text">Win</span>
+          <div style={{ width: 30, height: 30, borderRadius: 8, background: 'linear-gradient(135deg, #2563eb, #f59e0b)', display: 'flex', alignItems: 'center', justifyContent: 'center' }}>
+            <Globe size={16} color="white" />
+          </div>
+          <span style={{ fontFamily: "'Plus Jakarta Sans', sans-serif", fontWeight: 700, fontSize: '1rem', color: 'white' }}>
+            Impact<span style={{ color: '#f59e0b' }}>Drive</span>
           </span>
         </div>
-
-        <div style={{ width: 36, height: 36, borderRadius: '50%', background: 'linear-gradient(135deg, #3b82f6, #8b5cf6)', display: 'flex', alignItems: 'center', justifyContent: 'center', fontWeight: 700, fontSize: '0.85rem', color: 'white' }}>
+        <div style={{ width: 36, height: 36, borderRadius: '50%', background: 'linear-gradient(135deg, #2563eb, #059669)', display: 'flex', alignItems: 'center', justifyContent: 'center', fontWeight: 700, fontSize: '0.85rem', color: 'white' }}>
           {user?.name?.[0]?.toUpperCase() || 'U'}
         </div>
       </div>
 
-      {/* ── MOBILE DRAWER ── */}
+      {/* Mobile Drawer */}
       <AnimatePresence>
         {drawerOpen && (
           <>
             <motion.div
-              key="overlay"
-              initial={{ opacity: 0 }}
-              animate={{ opacity: 1 }}
-              exit={{ opacity: 0 }}
-              transition={{ duration: 0.2 }}
-              onClick={() => setDrawerOpen(false)}
-              style={{ position: 'fixed', inset: 0, background: 'rgba(0,0,0,0.65)', backdropFilter: 'blur(4px)', zIndex: 59 }}
+              key="overlay" initial={{ opacity: 0 }} animate={{ opacity: 1 }} exit={{ opacity: 0 }} transition={{ duration: 0.2 }}
+              onClick={() => setDrawerOpen(false)} style={{ position: 'fixed', inset: 0, background: 'rgba(0,0,0,0.75)', backdropFilter: 'blur(4px)', zIndex: 59 }}
             />
             <motion.div
-              key="drawer"
-              initial={{ x: '-100%' }}
-              animate={{ x: 0 }}
-              exit={{ x: '-100%' }}
-              transition={{ duration: 0.28, ease: [0.16, 1, 0.3, 1] }}
-              style={{
-                position: 'fixed', top: 0, left: 0, bottom: 0,
-                width: 280, zIndex: 60,
-                background: 'rgba(5,5,16,0.98)',
-                backdropFilter: 'blur(24px)',
-                borderRight: '1px solid var(--glass-border)',
-              }}
+              key="drawer" initial={{ x: '-100%' }} animate={{ x: 0 }} exit={{ x: '-100%' }} transition={{ duration: 0.28, ease: [0.16, 1, 0.3, 1] }}
+              style={{ position: 'fixed', top: 0, left: 0, bottom: 0, width: 280, zIndex: 60, background: 'var(--bg-primary)', borderRight: '1px solid var(--glass-border)' }}
             >
               <SidebarContent inDrawer />
             </motion.div>
@@ -184,23 +164,17 @@ export default function Sidebar() {
         )}
       </AnimatePresence>
 
-      {/* ── MOBILE BOTTOM TAB BAR ── */}
+      {/* Mobile Bottom Tab */}
       {user?.role !== 'admin' && (
         <nav className="mobile-tabbar">
           {userLinks.map(({ to, icon: Icon, label, end }) => {
             const isActive = end ? location.pathname === to : location.pathname.startsWith(to);
             return (
-              <NavLink
-                key={to}
-                to={to}
-                end={end}
-                className="mobile-tab"
-                style={{ color: isActive ? '#60a5fa' : 'var(--text-muted)' }}
-              >
-                <div className="mobile-tab-icon" style={{ background: isActive ? 'rgba(59,130,246,0.15)' : 'transparent', borderRadius: 10 }}>
+              <NavLink key={to} to={to} end={end} className="mobile-tab" style={{ color: isActive ? '#2563eb' : 'var(--text-muted)' }}>
+                <div className="mobile-tab-icon" style={{ background: isActive ? 'rgba(37, 99, 235, 0.1)' : 'transparent', borderRadius: 10 }}>
                   <Icon size={20} />
                 </div>
-                <span className="mobile-tab-label" style={{ color: isActive ? '#60a5fa' : 'var(--text-muted)' }}>{label}</span>
+                <span className="mobile-tab-label" style={{ color: isActive ? '#2563eb' : 'var(--text-muted)' }}>{label}</span>
               </NavLink>
             );
           })}

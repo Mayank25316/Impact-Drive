@@ -3,14 +3,13 @@ import { motion, AnimatePresence } from 'framer-motion';
 import { useState, useEffect } from 'react';
 import { useAuth } from '../context/AuthContext';
 import GlowButton from './GlowButton';
-import { Menu, X } from 'lucide-react';
+import { Menu, X, Globe } from 'lucide-react';
 
 export default function Navbar() {
   const { user, logoutUser } = useAuth();
   const navigate = useNavigate();
   const [menuOpen, setMenuOpen] = useState(false);
 
-  // Close menu on resize to desktop
   useEffect(() => {
     const handleResize = () => {
       if (window.innerWidth >= 768) setMenuOpen(false);
@@ -19,17 +18,16 @@ export default function Navbar() {
     return () => window.removeEventListener('resize', handleResize);
   }, []);
 
-  // Lock body scroll when menu is open
   useEffect(() => {
     document.body.style.overflow = menuOpen ? 'hidden' : '';
     return () => { document.body.style.overflow = ''; };
   }, [menuOpen]);
 
   const navLinks = [
-    { label: 'How It Works', id: 'how-it-works' },
-    { label: 'Prizes', id: 'prizes' },
-    { label: 'Charities', id: 'charities' },
-    { label: 'Pricing', id: 'pricing' },
+    { label: 'The Protocol', id: 'how-it-works' },
+    { label: 'Reward Tiers', id: 'prizes' },
+    { label: 'Impact', id: 'charities' },
+    { label: 'Access', id: 'pricing' },
   ];
 
   const handleNavClick = (id) => {
@@ -51,16 +49,15 @@ export default function Navbar() {
           <Link to="/" style={{ textDecoration: 'none', display: 'flex', alignItems: 'center', gap: 10 }}>
             <div style={{
               width: 36, height: 36, borderRadius: 10,
-              background: 'linear-gradient(135deg, #3b82f6, #8b5cf6)',
+              background: 'linear-gradient(135deg, #2563eb, #f59e0b)',
               display: 'flex', alignItems: 'center', justifyContent: 'center',
-              fontSize: '1.1rem', fontWeight: 800,
-              boxShadow: '0 0 20px rgba(59,130,246,0.4)',
+              boxShadow: '0 0 20px rgba(37,99,235,0.4)',
               flexShrink: 0,
             }}>
-              ⛳
+              <Globe size={20} color="white" />
             </div>
-            <span style={{ fontFamily: "'Space Grotesk', sans-serif", fontWeight: 700, fontSize: '1.1rem', color: 'white' }}>
-              Golf<span className="gradient-text">Win</span>
+            <span style={{ fontFamily: "'Plus Jakarta Sans', sans-serif", fontWeight: 700, fontSize: '1.1rem', color: 'white', letterSpacing: '-0.02em' }}>
+              Impact<span style={{ color: '#f59e0b' }}>Drive</span>
             </span>
           </Link>
 
@@ -72,7 +69,8 @@ export default function Navbar() {
                 href={`#${link.id}`}
                 style={{
                   color: 'var(--text-secondary)', textDecoration: 'none',
-                  fontSize: '0.9rem', fontWeight: 500, transition: 'color 0.2s',
+                  fontSize: '0.9rem', fontWeight: 600, transition: 'color 0.2s',
+                  fontFamily: "'Plus Jakarta Sans', sans-serif"
                 }}
                 onMouseEnter={e => e.target.style.color = 'white'}
                 onMouseLeave={e => e.target.style.color = 'var(--text-secondary)'}
@@ -86,13 +84,13 @@ export default function Navbar() {
           <div className="navbar-auth">
             {user ? (
               <>
-                <GlowButton variant="ghost" size="sm" onClick={() => navigate(user.role === 'admin' ? '/admin' : '/dashboard')}>Dashboard</GlowButton>
+                <GlowButton variant="ghost" size="sm" onClick={() => navigate(user.role === 'admin' ? '/admin' : '/dashboard')}>Portal</GlowButton>
                 <GlowButton size="sm" onClick={logoutUser}>Logout</GlowButton>
               </>
             ) : (
               <>
                 <GlowButton variant="ghost" size="sm" onClick={() => navigate('/login')}>Login</GlowButton>
-                <GlowButton size="sm" onClick={() => navigate('/register')}>Get Started</GlowButton>
+                <GlowButton size="sm" onClick={() => navigate('/register')}>Initialize</GlowButton>
               </>
             )}
           </div>
@@ -120,28 +118,18 @@ export default function Navbar() {
           <>
             <motion.div
               key="overlay"
-              initial={{ opacity: 0 }}
-              animate={{ opacity: 1 }}
-              exit={{ opacity: 0 }}
-              transition={{ duration: 0.2 }}
+              initial={{ opacity: 0 }} animate={{ opacity: 1 }} exit={{ opacity: 0 }} transition={{ duration: 0.2 }}
               onClick={() => setMenuOpen(false)}
-              style={{
-                position: 'fixed', inset: 0, background: 'rgba(0,0,0,0.6)',
-                backdropFilter: 'blur(4px)', zIndex: 49,
-              }}
+              style={{ position: 'fixed', inset: 0, background: 'rgba(0,0,0,0.6)', backdropFilter: 'blur(4px)', zIndex: 49 }}
             />
             <motion.div
               key="drawer"
-              initial={{ opacity: 0, y: -20 }}
-              animate={{ opacity: 1, y: 0 }}
-              exit={{ opacity: 0, y: -20 }}
-              transition={{ duration: 0.25, ease: [0.16, 1, 0.3, 1] }}
+              initial={{ opacity: 0, y: -20 }} animate={{ opacity: 1, y: 0 }} exit={{ opacity: 0, y: -20 }} transition={{ duration: 0.25, ease: [0.16, 1, 0.3, 1] }}
               style={{
                 position: 'fixed', top: 64, left: 0, right: 0, zIndex: 50,
-                background: 'rgba(5,5,16,0.97)', backdropFilter: 'blur(24px)',
+                background: 'rgba(10,15,28,0.98)', backdropFilter: 'blur(24px)',
                 borderBottom: '1px solid rgba(255,255,255,0.08)',
-                padding: '24px 20px 32px',
-                display: 'flex', flexDirection: 'column', gap: 8,
+                padding: '24px 20px 32px', display: 'flex', flexDirection: 'column', gap: 8,
               }}
             >
               {navLinks.map((link) => (
@@ -151,9 +139,9 @@ export default function Navbar() {
                   style={{
                     background: 'none', border: 'none',
                     color: 'var(--text-secondary)', textAlign: 'left',
-                    fontSize: '1.05rem', fontWeight: 500, cursor: 'pointer',
-                    padding: '14px 16px', borderRadius: 12,
-                    transition: 'all 0.2s', minHeight: 44,
+                    fontSize: '1.05rem', fontWeight: 600, cursor: 'pointer',
+                    padding: '14px 16px', borderRadius: 12, transition: 'all 0.2s', minHeight: 44,
+                    fontFamily: "'Plus Jakarta Sans', sans-serif"
                   }}
                   onMouseEnter={e => { e.currentTarget.style.background = 'rgba(255,255,255,0.06)'; e.currentTarget.style.color = 'white'; }}
                   onMouseLeave={e => { e.currentTarget.style.background = 'none'; e.currentTarget.style.color = 'var(--text-secondary)'; }}
@@ -166,13 +154,13 @@ export default function Navbar() {
 
               {user ? (
                 <div style={{ display: 'flex', flexDirection: 'column', gap: 12 }}>
-                  <GlowButton variant="ghost" style={{ width: '100%', minHeight: 48 }} onClick={() => { setMenuOpen(false); navigate(user.role === 'admin' ? '/admin' : '/dashboard'); }}>Dashboard</GlowButton>
+                  <GlowButton variant="ghost" style={{ width: '100%', minHeight: 48 }} onClick={() => { setMenuOpen(false); navigate(user.role === 'admin' ? '/admin' : '/dashboard'); }}>Portal</GlowButton>
                   <GlowButton style={{ width: '100%', minHeight: 48 }} onClick={() => { setMenuOpen(false); logoutUser(); }}>Logout</GlowButton>
                 </div>
               ) : (
                 <div style={{ display: 'flex', flexDirection: 'column', gap: 12 }}>
                   <GlowButton variant="ghost" style={{ width: '100%', minHeight: 48 }} onClick={() => { setMenuOpen(false); navigate('/login'); }}>Login</GlowButton>
-                  <GlowButton style={{ width: '100%', minHeight: 48 }} onClick={() => { setMenuOpen(false); navigate('/register'); }}>Get Started</GlowButton>
+                  <GlowButton style={{ width: '100%', minHeight: 48 }} onClick={() => { setMenuOpen(false); navigate('/register'); }}>Initialize</GlowButton>
                 </div>
               )}
             </motion.div>
